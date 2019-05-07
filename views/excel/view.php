@@ -45,8 +45,8 @@ $this->params['breadcrumbs'][] =  $model->judul;?>
 
         foreach($attr as $field){ ?>
             <div class="col-md-4">
-            <div id="chart_<?php echo $field;?>" style="height:300px;width:300px;">
-            </div>
+            <!-- <div id="chart_<?php // echo $field;?>" style="height:300px;width:300px;"> -->
+            <!-- </div> -->
             <?php
             $sql = "SELECT COUNT(*) as count_data,$field as keyword FROM ".$model->nama_tabel." GROUP BY $field";
             $data = $db->createCommand($sql)->queryAll();

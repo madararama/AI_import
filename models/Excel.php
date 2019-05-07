@@ -36,7 +36,8 @@ class Excel extends \yii\db\ActiveRecord
         return [
             [['create_at', 'update_at'], 'safe'],
             [['field_data', 'excel'], 'string'],
-            
+            [['judul','excel'],'required'],
+            [['excel'],'file','extensions'=>'csv','maxSize'=>1024 * 1024 * 5],
             [['keterangan', 'judul', 'nama_tabel', 'create_by', 'update_by'], 'string', 'max' => 25],
         ];
     }
