@@ -75,7 +75,8 @@ class ExcelController extends Controller
                 //$model->save();
                 if (!empty($excel)) {
 
-                    $filename = 'uploads/'. 'excel.' . $excel->extension;
+                    $filenm = $model->judul;
+                    $filename = 'uploads/'. "$filenm." . $excel->extension;
                     $excel->saveAs($filename);
                     $model->excel = $filename;
                    
@@ -151,7 +152,7 @@ class ExcelController extends Controller
                     $model->save();
                 }
             }
-
+            return $this->redirect(['excel/index']);
         } else {
         return $this->render('create', [
             'model' => $model,
@@ -190,6 +191,8 @@ class ExcelController extends Controller
     {
         $model = $this->findModel($id);
         $nama_tbl = $model->nama_tabel;
+        $file= $model->judul;
+        unlink('uploads/'.$file .".csv");
         $sql = "DROP TABLE IF EXISTS $nama_tbl";
         \yii::$app->db->createCommand($sql)->execute();
         $model->delete();

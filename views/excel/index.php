@@ -7,12 +7,12 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\excelSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Excels';
+$this->title = 'Excel';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="excel-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -27,14 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'id',
-            'keterangan',
             'judul',
-            'nama_tabel',
+            'keterangan',
+            // 'nama_tabel',
             'create_at',
-            'update_at',
-            'create_by',
-            'update_by',
-            'excel',
+            // 'update_at',
+            // 'create_by',
+            // 'update_by',
+            // 'excel',
             // 'field_data:ntext',
 
 

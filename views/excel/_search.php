@@ -18,15 +18,15 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= //$form->field($model, 'id') ?>
 
     <?= $form->field($model, 'keterangan') ?>
 
     <?= $form->field($model, 'judul') ?>
 
-    <?= $form->field($model, 'nama_tabel') ?>
+    <?= //$form->field($model, 'nama_tabel') ?>
 
-    <?= $form->field($model, 'create_at') ?>
+    <?= //$form->field($model, 'create_at') ?>
 
     <?php // echo $form->field($model, 'update_at') ?>
 
@@ -34,7 +34,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'update_by') ?>
 
-    <?php // echo $form->field($model, 'field_data') ?>
+    <?php  echo $form->field($model, 'excel') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -16,8 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'keterangan')->textInput(['maxlength' => true]) ?>
 
-
-    <?= $form->field($model, 'nama_tabel')->textInput(['maxlength' => true]) ?>
+    <!-- <?= $form->field($model, 'nama_tabel')->textInput(['maxlength' => true]) ?> -->
 
     <!-- <?= $form->field($model, 'create_at')->textInput() ?> -->
 
@@ -27,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <!-- <?= $form->field($model, 'update_by')->textInput(['maxlength' => true]) ?> -->
 
-    <?= $form->field($model, 'field_data')->textarea(['rows' => 6]) ?>
+    <!-- <?= $form->field($model, 'field_data')->textarea(['rows' => 6]) ?> -->
 
     <?= $form->field($model, 'excel')->fileinput() ?>
 
