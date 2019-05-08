@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Excel */
 
 $this->title = 'Create Excel';
-$this->params['breadcrumbs'][] = ['label' => 'Excels', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Excel', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="excel-create">

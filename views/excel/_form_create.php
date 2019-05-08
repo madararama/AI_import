@@ -14,6 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'judul')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'excel')->fileinput() ?>
+    
     <?= $form->field($model, 'keterangan')->textInput(['maxlength' => true]) ?>
 
     <!-- <?= $form->field($model, 'nama_tabel')->textInput(['maxlength' => true]) ?> -->
@@ -28,7 +30,6 @@ use yii\widgets\ActiveForm;
 
     <!-- <?= $form->field($model, 'field_data')->textarea(['rows' => 6]) ?> -->
 
-    <?= $form->field($model, 'excel')->fileinput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

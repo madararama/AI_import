@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\data\SqlDataProvider;
+use yii\widgets\ListView;
+
 
 $db =  \Yii::$app->db;
 $count = $db->createCommand('SELECT COUNT(*) FROM '.$model->nama_tabel)->queryScalar();
@@ -39,19 +41,41 @@ $this->params['breadcrumbs'][] =  $model->judul;?>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
-<div class='row'>
+
+    <hr>
+    <p>
+        <?= Html::a('Create Chart', ['/chart/create','id_excel'=>$model->id], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <div class='row'>
+  
+
         <?php  
                 // $attr = ["metode_pemilihan"];
+        $data_chart = \app\models\Chart::find()->where(["id_excel"=>$model->id])->orderBy("urutan ASC")->all();
+        foreach($data_chart as $field){ ?>
+            <div class="<?php echo $field->kolom;?>">
 
-        foreach($attr as $field){ ?>
-            <div class="col-md-4">
-            <!-- <div id="chart_<?php // echo $field;?>" style="height:300px;width:300px;"> -->
-            <!-- </div> -->
+
+             <div id="chart_<?php  echo $field->id;?>" style="height:<?php echo $field->kolom;?>px;width:<?php echo $field->width;?>%;"> 
+            </div>
+                                <?= Html::a('Update', ['/chart/update', 'id' => $field->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['/chart/delete', 'id' => $field->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+            </div>
             <?php
-            $sql = "SELECT COUNT(*) as count_data,$field as keyword FROM ".$model->nama_tabel." GROUP BY $field";
+            $count_sum = $field->field_x_tipe;
+            $field_x = $field->field_x;
+            $field_y = $field->field_y;
+
+            $sql = "SELECT $count_sum($field_x) as value_data,$field_y as keyword FROM ".$model->nama_tabel." GROUP BY $field_y";
             $data = $db->createCommand($sql)->queryAll();
-            // print_r($data);
-            // die();
+            
             ?>
        
        <script>
@@ -60,26 +84,21 @@ $this->params['breadcrumbs'][] =  $model->judul;?>
         <?php foreach($data as $dt){ ?>
              var resp = {
                 "name":"<?php echo $dt['keyword'];?>",
-                "y":parseInt(<?php echo $dt['count_data'];?>),
+                "y":parseInt(<?php echo $dt['value_data'];?>),
             }
             dataProvider.push(resp);
         <?php } ?>
   
         console.log(dataProvider)
-            Highcharts.chart('chart_<?php echo $field;?>', {
+            Highcharts.chart('chart_<?php echo $field->id;?>', {
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
                     plotShadow: false,
-                    type: 'pie',
-                    // events: {
-                    //     drilldown: function(){
-
-                    //     }
-                    // }
+                    type: '<?php echo strtolower($field->tipe_chart) ?>',
                 },
                 title: {
-                    text: '<?php echo $field;?>'
+                    text: '<?php echo $field->judul;?>'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -99,7 +118,7 @@ $this->params['breadcrumbs'][] =  $model->judul;?>
                             }
                         }
                     }
-                },
+                },exporting: { enabled: false },
                 series: [ {
                     name: '',
                     colorByPoint: true,
@@ -107,19 +126,30 @@ $this->params['breadcrumbs'][] =  $model->judul;?>
                     }
                 ],
             });
-
-            
 </script>
 
-</div>
 
  <?php  } ?>
+ </div>
+
      <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     
     <?php 
-    $column = array_merge([['class' => 'yii\grid\SerialColumn']],$attr);
-    // $column = array_merge([['class' => 'yii\grid\ActionColumn']],$column);
+    $actionButton = [
+        'class' => 'yii\grid\ActionColumn',
+        'template' => '{update}{delete}',
+        'buttons' => [
+            'update' => function($id, $data) use ($model) {
+                return Html::a('<span class="btn btn-sm btn-default">UPDATE</span>', ['update-result', 'id' => $data['id_primarykey'],'excel_id'=>$model->id], ['title' => 'Update', 'id' => 'modal-btn-view']);
+            },
+            'delete' => function($url, $data) use($model){
+                return Html::a('<span class="btn btn-sm btn-danger">DELETE</span>', ['delete-result', 'id' => $data['id_primarykey'],'excel_id'=>$model->id], ['title' => 'Delete', 'class' => '', 'data' => ['confirm' => 'Are you absolutely sure ? You will lose all the information about this user with this action.', 'method' => 'post', 'data-pjax' => false],]);
+            }
+        ]
+    ];
+    $column = array_merge([$actionButton],$attr);
+    $column = array_merge([['class' => 'yii\grid\SerialColumn']],$column);
     ?>
     <?= GridView::widget([
         'filterModel' => false,

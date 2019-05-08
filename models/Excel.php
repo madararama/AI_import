@@ -35,10 +35,11 @@ class Excel extends \yii\db\ActiveRecord
     {
         return [
             [['create_at', 'update_at'], 'safe'],
-            [['field_data', 'excel'], 'string'],
-            [['judul','excel'],'required'],
-            [['excel'],'file','extensions'=>'csv','maxSize'=>1024 * 1024 * 5],
-            [['keterangan', 'judul', 'nama_tabel', 'create_by', 'update_by'], 'string', 'max' => 25],
+            [['field_data'], 'string'],
+            [['judul'],'required'],
+            [['excel'],'file', 'skipOnEmpty' => false,'extensions'=>'csv','checkExtensionByMimeType' => false,'maxSize'=>1024 * 1024 * 5,'on'=>'upload_file'],
+            [['excel'],'safe','on'=>'save_filename'],
+            [['keterangan', 'judul', 'nama_tabel', 'create_by', 'update_by'], 'safe'],
         ];
     }
 
