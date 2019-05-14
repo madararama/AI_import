@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Chart */
 
 $this->title = 'Update Chart: ' . $model->id;
-// $this->params['breadcrumbs'][] = ['label' => 'Charts', 'url' => ['index']];
-// $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Charts', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="chart-update">
